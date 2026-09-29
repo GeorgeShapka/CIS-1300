@@ -1,0 +1,167 @@
+Welcome to STREAKsafe admin page
+
+Student# 1:
+Day 1 study minutes: 90
+Day 2 study minutes: 60
+Day 3 study minutes: 0
+Day 4 study minutes: 180
+Day 5 study minutes: 30
+Day 6 study minutes: 200
+Day 7 study minutes: 0
+
+Day 1 breaks taken (0 to 10): 2
+Day 2 breaks taken (0 to 10): 0
+Day 3 breaks taken (0 to 10): 3
+Day 4 breaks taken (0 to 10): 5
+Day 5 breaks taken (0 to 10): 2
+Day 6 breaks taken (0 to 10): 7
+Day 7 breaks taken (0 to 10): 1
+
+Night 1 sleep hours (0.0 to 12.0): 7.5
+Night 2 sleep hours (0.0 to 12.0): 6
+Night 3 sleep hours (0.0 to 12.0): 5.5
+Night 4 sleep hours (0.0 to 12.0): 8
+Night 5 sleep hours (0.0 to 12.0): 7
+Night 6 sleep hours (0.0 to 12.0): 6.5
+Night 7 sleep hours (0.0 to 12.0): 9.5
+
+Is this an exam week? ('y' or 'n'): n
+
+Weights: study = 40, breaks = 20, sleep = 40
+
+Overall study score (40) = 17.14 / 40
+Overall break score (20) = 14.00 / 20
+Overall sleep score (40) = 31.43 / 40
+
+Overall weekly score breakdown
+*************************
+Study  = 17.14
+Breaks = 14.00
+Sleep  = 31.43
+*************************
+Your overall weekly score = 62.57%
+Overall grade = C
+
+Would you like to continue: ('y' to continue, 'n' to exit: )y
+
+/* Test case 2:
+This test case is the same as above except that it is 
+for an exam week
+*/
+
+Student# 2:
+Day 1 study minutes: 90
+Day 2 study minutes: 60
+Day 3 study minutes: 0
+Day 4 study minutes: 180
+Day 5 study minutes: 30
+Day 6 study minutes: 200
+Day 7 study minutes: 0
+
+Day 1 breaks taken (0 to 10): 2
+Day 2 breaks taken (0 to 10): 0
+Day 3 breaks taken (0 to 10): 3
+Day 4 breaks taken (0 to 10): 5
+Day 5 breaks taken (0 to 10): 2
+Day 6 breaks taken (0 to 10): 7
+Day 7 breaks taken (0 to 10): 1
+
+Night 1 sleep hours (0.0 to 12.0): 7.5
+Night 2 sleep hours (0.0 to 12.0): 6
+Night 3 sleep hours (0.0 to 12.0): 5.5
+Night 4 sleep hours (0.0 to 12.0): 8
+Night 5 sleep hours (0.0 to 12.0): 7
+Night 6 sleep hours (0.0 to 12.0): 6.5
+Night 7 sleep hours (0.0 to 12.0): 9.5
+
+Is this an exam week? ('y' or 'n'): y
+
+Weights: study = 50, breaks = 10, sleep = 40
+
+Overall study score (50) = 21.43 / 50
+Overall break score (10) = 7.00 / 10
+Overall sleep score (40) = 31.43 / 40
+
+Overall weekly score breakdown
+*************************
+Study  = 21.43
+Breaks = 7.00
+Sleep  = 31.43
+*************************
+Your overall weekly score = 59.86%
+Overall grade = D
+
+Would you like to continue: ('y' to continue, 'n' to exit: )y
+
+/*Test case 3*/
+
+Student# 3:
+Day 1 study minutes: 180
+Day 2 study minutes: 200
+Day 3 study minutes: 180
+Day 4 study minutes: 150
+Day 5 study minutes: 180
+Day 6 study minutes: 200
+Day 7 study minutes: 200
+
+Day 1 breaks taken (0 to 10): 0
+Day 2 breaks taken (0 to 10): 6
+Day 3 breaks taken (0 to 10): 0
+Day 4 breaks taken (0 to 10): 6
+Day 5 breaks taken (0 to 10): 0
+Day 6 breaks taken (0 to 10): 6
+Day 7 breaks taken (0 to 10): 0
+
+Night 1 sleep hours (0.0 to 12.0): 4
+Night 2 sleep hours (0.0 to 12.0): 5
+Night 3 sleep hours (0.0 to 12.0): 4
+Night 4 sleep hours (0.0 to 12.0): 11
+Night 5 sleep hours (0.0 to 12.0): 4
+Night 6 sleep hours (0.0 to 12.0): 4
+Night 7 sleep hours (0.0 to 12.0): 4
+
+Is this an exam week? ('y' or 'n'): n
+
+Weights: study = 40, breaks = 20, sleep = 40
+
+Overall study score (40) = 39.05 / 40
+Overall break score (20) = 8.00 / 20
+Overall sleep score (40) = 7.43 / 40
+
+Overall weekly score breakdown
+*************************
+Study  = 39.05
+Breaks = 8.00
+Sleep  = 7.43
+*************************
+Your overall weekly score = 54.48%
+Overall grade = F
+
+Would you like to continue: ('y' to continue, 'n' to exit: )y
+
+/* Test case 4
+0 study minutes on all 7 days
+*/
+
+Student# 4:
+Day 1 study minutes: 0
+Day 2 study minutes: 0
+Day 3 study minutes: 0
+Day 4 study minutes: 0
+Day 5 study minutes: 0
+Day 6 study minutes: 0
+Day 7 study minutes: 0
+
+Overall weekly score breakdown
+*************************
+Study  = 0.00
+Breaks = 0.00
+Sleep  = 0.00
+*************************
+Your overall weekly score = 0.00%
+Overall grade = F
+
+Would you like to continue: ('y' to continue, 'n' to exit: )n
+
+Average weekly score of 4 students = 44.23%
+
