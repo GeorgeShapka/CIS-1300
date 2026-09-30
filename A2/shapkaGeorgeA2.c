@@ -46,6 +46,13 @@ int main(void){
   //while loop to loop through students
   while(doLoop){
     studentCount++;
+
+    //default study weights
+    studyWeight = 40;
+    breakWeight = 20;
+    sleepWeight = 40;
+
+    
     printf("Welcome to STREAKsafe admin page\n\nStudent# %d:", studentCount);
 
     //studyMinutes
@@ -60,6 +67,7 @@ int main(void){
       studyScore += (studyMinutes / 180.0) * 100.0;
     }
     averageStudyScore = studyScore / DaysPerWeek;
+    printf("\n");
 
 
     //if the student did not study
@@ -69,7 +77,6 @@ int main(void){
     }
     else{
       //breaks
-      printf("\n");
       for(int i = 0; i < DaysPerWeek; i++){
         printf("Day %d breaks taken (0 to 10): ", i + 1);
         scanf("%d", &breaksTaken);
@@ -124,36 +131,35 @@ int main(void){
         sleepWeight = 40;
       }
 
+      //calculate contributions
+      studyContribution = (averageStudyScore / 100.0) * studyWeight;
+      breakContribution = (averageBreakScore / 100.0) * breakWeight;
+      sleepContribution = (averageSleepScore / 100.0) * sleepWeight;
+
+      //calculate grade
+      weeklyScore = studyContribution + breakContribution + sleepContribution;
+
+      if(weeklyScore <= 49.99){
+        letterGrade = 'F';
+      }
+      else if(50 <= weeklyScore && weeklyScore <= 59.99){
+        letterGrade = 'D';
+      }
+      else if(60 <= weeklyScore && weeklyScore <= 69.99){
+        letterGrade = 'C';
+      }
+      else if(70 <= weeklyScore && weeklyScore <= 79.99){
+        letterGrade = 'B';
+      }
+      else if(80 <= weeklyScore){
+        letterGrade = 'A';
+      }
+
       printf("Weights: study = %d, breaks = %d, sleep = %d\n\n", studyWeight, breakWeight, sleepWeight);
+      printf("Overall study score (%d) = %.2lf / %d\n", studyWeight, studyContribution, studyWeight);
+      printf("Overall break score (%d) = %.2lf / %d\n", breakWeight, breakContribution, breakWeight);
+      printf("Overall sleep score (%d) = %.2lf / %d\n\n", sleepWeight, sleepContribution, sleepWeight);
     }//end of if study min
-
-    //calculate contributions
-    studyContribution = (averageStudyScore / 100.0) * studyWeight;
-    breakContribution = (averageBreakScore / 100.0) * breakWeight;
-    sleepContribution = (averageSleepScore / 100.0) * sleepWeight;
-
-    //calculate grade
-    weeklyScore = studyContribution + breakContribution + sleepContribution;
-
-    if(weeklyScore <= 49.99){
-      letterGrade = 'F';
-    }
-    else if(50 <= weeklyScore && weeklyScore <= 59.99){
-      letterGrade = 'D';
-    }
-    else if(60 <= weeklyScore && weeklyScore <= 69.99){
-      letterGrade = 'C';
-    }
-    else if(70 <= weeklyScore && weeklyScore <= 79.99){
-      letterGrade = 'B';
-    }
-    else if(80 <= weeklyScore){
-      letterGrade = 'A';
-    }
-
-    printf("Overall study score (%d) = %.2lf / %d\n", studyWeight, studyContribution, studyWeight);
-    printf("Overall break score (%d) = %.2lf / %d\n", breakWeight, breakContribution, breakWeight);
-    printf("Overall sleep score (%d) = %.2lf / %d\n\n", sleepWeight, sleepContribution, sleepWeight);
 
     printf("Overall weekly score breakdown\n*************************\nStudy  = %.2lf\nBreaks = %.2lf\nSleep  = %.2lf\n*************************\n", studyContribution, breakContribution, sleepContribution);
     printf("Your overall weekly score = %.2lf%%\n", weeklyScore);
