@@ -43,20 +43,14 @@ int main(void){
   double allStudentAverageScore = 0.0;
 
 
+  printf("Welcome to STREAKsafe admin page\n\n");
+
   //while loop to loop through students
   while(doLoop){
     studentCount++;
 
-    //default study weights
-    studyWeight = 40;
-    breakWeight = 20;
-    sleepWeight = 40;
-
-    
-    printf("Welcome to STREAKsafe admin page\n\nStudent# %d:", studentCount);
-
     //studyMinutes
-    printf("\n");
+    printf("Student# %d:\n", studentCount);
     for(int i = 0; i < DaysPerWeek; i++){
       printf("Day %d study minutes: ", i + 1);
       scanf("%d", &studyMinutes);
@@ -99,7 +93,7 @@ int main(void){
       //sleep
       printf("\n");
       for(int i = 0; i < DaysPerWeek; i++){
-        printf("Night %d sleep hours (0.0 to 12.0); ", i + 1);
+        printf("Night %d sleep hours (0.0 to 12.0): ", i + 1);
         scanf("%lf", &hoursSleep);
 
         if(7.0 <= hoursSleep && hoursSleep <= 9.0){
@@ -185,6 +179,13 @@ int main(void){
     studyScore = 0;
     breakScore = 0;
     sleepScore = 0;
+    studyContribution = 0;
+    breakContribution = 0;
+    sleepContribution = 0;
+    weeklyScore = 0;
+    studyWeight = 40;
+    breakWeight = 20;
+    sleepWeight = 40;
     
     printf("\n");
   }
@@ -192,6 +193,6 @@ int main(void){
   allStudentAverageScore = allStudentAverageScore / studentCount;
 
   //output results
-  printf("\nAverage weekly score of %d students - %.2lf%%\n\n", studentCount, allStudentAverageScore);
+  printf("\nAverage weekly score of %d students = %.2lf%%\n\n", studentCount, allStudentAverageScore);
   return(0);
 }
