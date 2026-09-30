@@ -138,8 +138,12 @@ int main(void){
 
       //calculate grade
       weeklyScore = studyContribution + breakContribution + sleepContribution;
-
-      if(weeklyScore <= 49.99){
+      
+      if(sleepContribution < 20.0)
+      {
+        letterGrade = 'F';
+      }
+      else if(weeklyScore <= 49.99){
         letterGrade = 'F';
       }
       else if(50 <= weeklyScore && weeklyScore <= 59.99){
