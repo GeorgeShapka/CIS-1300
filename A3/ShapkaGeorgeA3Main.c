@@ -4,6 +4,7 @@
 
 void normalize(char line[]);
 int tokenize(const char line[], char tokens[][MAX_WORD]);
+int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD], int numStop);
 
 int main () {
 
@@ -68,5 +69,27 @@ int tokenize(const char line[], char tokens[][MAX_WORD]){
          letterIndex = 0;
       }
       ++lineIndex;
+   }
+   return(wordIndex + 1);
+}
+
+int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD], int numStop){
+   bool match = false;
+   for(int i = 0; i < numToken; i++){
+      for(int y = 0; y < numStop; y++){
+         for(int z = 0; z < MAX_WORD; z++){
+            if(tokens[i][z] == stop[y][z] && tokens[i][z] != '\0'){
+               match = true;
+               z = MAX_WORD;
+               y = numStop;
+            }
+         }
+      }
+      if(match == true){
+         for(int q = 0; q < MAX_WORD; q++){
+            tokens[i][q] = '\0';
+         }
+      }
+      match = false;
    }
 }
