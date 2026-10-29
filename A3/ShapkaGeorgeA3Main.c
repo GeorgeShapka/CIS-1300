@@ -29,6 +29,10 @@ int main () {
    
    // call other functions here
    char tokens[MAX_TOKENS][MAX_WORD] = {0};
+
+   normalize(post);
+   int t = tokenize(post, tokens);
+   int r = removeStopWords(tokens, t, stop, numStops);
    
    fclose (fileInput);
    return 0;
@@ -78,7 +82,7 @@ int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD]
    for(int i = 0; i < numToken; i++){
       for(int y = 0; y < numStop; y++){
          for(int z = 0; z < MAX_WORD; z++){
-            if(tokens[i][z] == stop[y][z] && tokens[i][z] != '\0'){
+            if(strcmp(tokens[i], stop[y])){// tokens[i][z] == stop[y][z] && tokens[i][z] != '\0'
                match = true;
                z = MAX_WORD;
                y = numStop;
