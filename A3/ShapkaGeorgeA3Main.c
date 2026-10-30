@@ -1,7 +1,7 @@
 #include "ShapkaGeorgeA3.h"
 
 #define PUNCTUATION 12
-#define DEBUG
+//#define DEBUG
 
 void normalize(char line[]);
 int tokenize(const char line[], char tokens[][MAX_WORD]);
@@ -36,7 +36,12 @@ int main () {
       memset(tokens[y], '\0', MAX_WORD);
    }
 
+   printf("\n\n");
+   
    for(int i = 0; i < numPosts; i++){
+
+      printf("Post %d original: %s\n", i + 1, post[i]);
+
       #ifdef DEBUG
          printf("String %s\n", post[i]);
       #endif
@@ -65,8 +70,28 @@ int main () {
          for(int i = 0; i < r; i++){
             printf("%s\n", tokens[i]);
          }
+      #endif
+
+      applyLemmaMap(tokens, r, variant, lemma, numLemma);
+
+      #ifdef DEBUG
+         printf("\nlemmatized\n");
+         for(int i = 0; i < r; i++){
+            printf("%s\n", tokens[i]);
+         }
          printf("----------------------------------\n\n");
       #endif
+      
+      printf("Number of tokens = %d\n", t);
+      printf("Number of stop words removed = %d\n", t - r);
+      printf("Post %d cleaned: ", i + 1);
+      for(int y = 0; y < r; y++){
+         printf("%s", tokens[y]);
+         if(y != r - 1){
+            printf(" ");
+         }
+      }
+      printf("\n\n");
       
       for(int y = 0; y < MAX_TOKENS; y++){
          memset(tokens[y], '\0', MAX_WORD);
@@ -149,7 +174,13 @@ int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD]
 }
 
 void applyLemmaMap(char tokens[][MAX_WORD], int count, char variant[][MAX_WORD], char lemma[][MAX_WORD], int L){
-
+   for(int i = 0; i < count; i++){
+      for(int y = 0; y < L; y++){
+      if(strcmp(tokens[i], variant[y]) == 0){
+         strcpy(tokens[i], lemma[y]);
+      }
+      }
+   }
 }
 
 void shiftArrayLeft(char inputArray[][MAX_WORD], int maxStrings, int startIndex){
