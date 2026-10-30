@@ -1,6 +1,7 @@
 #include "ShapkaGeorgeA3.h"
 
 #define PUNCTUATION 12
+#define DEBUG
 
 void normalize(char line[]);
 int tokenize(const char line[], char tokens[][MAX_WORD]);
@@ -33,24 +34,35 @@ int main () {
    char tokens[MAX_TOKENS][MAX_WORD] = {0};
 
    for(int i = 0; i < numPosts; i++){
-      printf("String %s\n", post[i]);
+      #ifdef DEBUG
+         printf("String %s\n", post[i]);
+      #endif
+
       normalize(post[i]);
-      printf("\nNormalized %s\n", post[i]);
+
+      #ifdef DEBUG
+         printf("\nNormalized %s\n", post[i]);
+      #endif
 
       int t = tokenize(post[i], tokens);
-      printf("\nTokens\n");
-      for(int i = 0; i < t; i++){
-         printf("%s\n", tokens[i]);
-      }
+      
+      #ifdef DEBUG
+         printf("\nTokens\n");
+
+         for(int i = 0; i < t; i++){
+            printf("%s\n", tokens[i]);
+         }
+      #endif
 
       int r = removeStopWords(tokens, t, stop, numStops);
-
-      printf("\nRemoved Stop Words\n");
-      for(int i = 0; i < r; i++){
-         printf("%s\n", tokens[i]);
-      }
-
-      printf("----------------------------------\n\n");
+      
+      #ifdef DEBUG
+         printf("\nRemoved Stop Words\n");
+         for(int i = 0; i < r; i++){
+            printf("%s\n", tokens[i]);
+         }
+         printf("----------------------------------\n\n");
+      #endif
       
       for(int y = 0; y < MAX_TOKENS; y++){
          memset(tokens[y], '\0', MAX_WORD);
@@ -86,17 +98,13 @@ void normalize(char line[]){
 int tokenize(const char line[], char tokens[][MAX_WORD]){
    int lineIndex = 0;
    int wordIndex = 0;
-   int tokenCount = 1;
    int letterIndex = 0;
    bool space = false;
+
    while(line[lineIndex] != '\0'){
       if(line[lineIndex] != ' '){
          tokens[wordIndex][letterIndex] = line[lineIndex];
-         ++letterIndex;
-         if(space == true){
-            space = false;
-            tokenCount++;
-         }
+         letterIndex++;
       }
       else if(line[lineIndex] == ' '){
          ++wordIndex;
@@ -105,7 +113,7 @@ int tokenize(const char line[], char tokens[][MAX_WORD]){
       }
       ++lineIndex;
    }
-   return(tokenCount);
+   return(wordIndex - 1);
 }
 
 int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD], int numStop){
@@ -115,12 +123,12 @@ int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD]
       for(int y = 0; y < numStop; y++){
          if(strcmp(tokens[i], stop[y])){// tokens[i][z] == stop[y][z] && tokens[i][z] != '\0'
             match = true;
-            y = numStop;
-            numTokenNew--;
+            break;
          }
       }
       if(match == true){
          shiftArrayLeft(tokens, numToken, i);
+         numTokenNew--;
       }
       match = false;
    }
@@ -132,13 +140,9 @@ void applyLemmaMap(char tokens[][MAX_WORD], int count, char variant[][MAX_WORD],
 }
 
 void shiftArrayLeft(char inputArray[][MAX_WORD], int maxStrings, int startIndex){
-   for(int i = startIndex; i < maxStrings; i++){
-      if(inputArray[i + 1][0] == '\0'){
-         inputArray[i][0] = '\0';
-      }
-      else{
-         strcpy(inputArray[i], inputArray[i + 1]);
-         printf("%s\n", inputArray[i]);
-      }
-   }
+    for (int i = startIndex; i < maxStrings - 1; i++) {
+        strcpy(inputArray[i], inputArray[i + 1]);
+    }
+
+    inputArray[maxStrings - 1][0] = '\0';
 }
