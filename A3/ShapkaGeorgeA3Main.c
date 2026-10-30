@@ -32,29 +32,27 @@ int main () {
    
    // call other functions here
    char tokens[MAX_TOKENS][MAX_WORD];
-   for(int y = 0; y < MAX_TOKENS; y++){
-      memset(tokens[y], '\0', MAX_WORD);
-   }
 
    printf("\n\n");
    
-   for(int i = 0; i < numPosts; i++){
+   //iterate posts
+   for(int i = 0; i < numPosts; i++){   
+
+      //clear token array   
+      for(int y = 0; y < MAX_TOKENS; y++){
+         memset(tokens[y], '\0', MAX_WORD);
+      }
 
       printf("Post %d original: %s\n", i + 1, post[i]);
 
-      #ifdef DEBUG
-         printf("String %s\n", post[i]);
-      #endif
 
       normalize(post[i]);
-
       #ifdef DEBUG
          printf("\nNormalized %s\n", post[i]);
       #endif
       
 
       int t = tokenize(post[i], tokens);
-
       #ifdef DEBUG
          printf("\nTokens\n");
 
@@ -63,8 +61,8 @@ int main () {
          }
       #endif
 
+
       int r = removeStopWords(tokens, t, stop, numStops);
-      
       #ifdef DEBUG
          printf("\nRemoved Stop Words\n");
          for(int i = 0; i < r; i++){
@@ -72,8 +70,8 @@ int main () {
          }
       #endif
 
-      applyLemmaMap(tokens, r, variant, lemma, numLemma);
 
+      applyLemmaMap(tokens, r, variant, lemma, numLemma);
       #ifdef DEBUG
          printf("\nlemmatized\n");
          for(int i = 0; i < r; i++){
@@ -82,47 +80,53 @@ int main () {
          printf("----------------------------------\n\n");
       #endif
       
+
       printf("Number of tokens = %d\n", t);
       printf("Number of stop words removed = %d\n", t - r);
       printf("Post %d cleaned: ", i + 1);
+      //print tokens as a line
       for(int y = 0; y < r; y++){
          printf("%s", tokens[y]);
          if(y != r - 1){
             printf(" ");
          }
       }
+
       printf("\n\n");
-      
-      for(int y = 0; y < MAX_TOKENS; y++){
-         memset(tokens[y], '\0', MAX_WORD);
-      }
-   }
+   }//end of post iteration
    
    
    fclose (fileInput);
    return 0;
-}
+}//end of main
+
+
 
 void normalize(char line[]){
    int index = 0;
-   char curr = line[index];
    char punctuation [PUNCTUATION] = {'.', ',', '!', '?', ':', ';', '\"', '(', ')', '[', ']', '\0'};
-   while(curr != '\0'){
+
+   while(line[index] != '\0'){
+      //check if a letter is capitilized and convert
       if(line[index] <= 'Z' && line[index] >= 'A')
       {
          line[index] = line[index] + 32;//add 32 to map ascii caps to lowercase
       }
+
+      //check for punctuation and set to space
       for(int i = 0; i < PUNCTUATION; i++){
          if(line[index] == punctuation[i] && line[index] != '\0'){
             line[index] = 32;
          }
-      }
+      }//end of punctuation iteration
+
       ++index;
-      curr = line[index];
-   }
+   }//end of while loop to iterate through line
 
    return;
-}
+}//end of normalize
+
+
 
 int tokenize(const char line[], char tokens[][MAX_WORD]){
    int lineIndex = 0;
@@ -136,52 +140,68 @@ int tokenize(const char line[], char tokens[][MAX_WORD]){
          letterIndex++;
       }
       else if(line[lineIndex] == ' '){
+         //make sure past token is a word to avoid gaps in token array
          if(tokens[wordIndex][0] != ' ' && tokens[wordIndex][0] != '\0'){
             wordIndex++;
          }
          letterIndex = 0;
       }
       ++lineIndex;
-   }
+   }//end of wile loop to tokenize
+
+   //count tokens
    for(int i = 0; i < MAX_TOKENS; i++){
       if(tokens[i][0] != '\0'){
          wordCount++;
       }
-   }
+   }//end of token counter
+
    return(wordCount);
-}
+}//end of tokenize
+
+
 
 int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD], int numStop){
    bool match = false;
    int numTokenNew = numToken;
+
    for(int i = 0; i < numToken; i++){
+      //if a match, the array is shifted left, so subtract from i to account for that
       if(match){
          i--;
       }
       match = false;
+
+      //compare tokens to stop words
       for(int y = 0; y < numStop; y++){
          if(strcmp(tokens[i], stop[y]) == 0){
             match = true;
             break;
          }
-      }
+      }//end of stop iteration
+
       if(match){
          shiftArrayLeft(tokens, numToken, i);
          numTokenNew--;
       }
-   }
+   }//end of token iteration
+
    return numTokenNew;
-}
+}//end of removeStopWords
+
+
 
 void applyLemmaMap(char tokens[][MAX_WORD], int count, char variant[][MAX_WORD], char lemma[][MAX_WORD], int L){
    for(int i = 0; i < count; i++){
       for(int y = 0; y < L; y++){
-      if(strcmp(tokens[i], variant[y]) == 0){
-         strcpy(tokens[i], lemma[y]);
-      }
-      }
-   }
-}
+         if(strcmp(tokens[i], variant[y]) == 0){
+            strcpy(tokens[i], lemma[y]);
+         }
+      }//end of variant iteration
+   }//end of token iteration
+}//end of applyLemmaMap
+
+
 
 void shiftArrayLeft(char inputArray[][MAX_WORD], int maxStrings, int startIndex){
     for (int i = startIndex; i < maxStrings - 1; i++) {
@@ -189,4 +209,4 @@ void shiftArrayLeft(char inputArray[][MAX_WORD], int maxStrings, int startIndex)
     }
 
     inputArray[maxStrings - 1][0] = '\0';
-}
+}//end of shiftArrayLeft
