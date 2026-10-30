@@ -31,7 +31,10 @@ int main () {
    numPosts = readInput (fileInput, stop, &numStops, variant, lemma, &numLemma, post);
    
    // call other functions here
-   char tokens[MAX_TOKENS][MAX_WORD] = {0};
+   char tokens[MAX_TOKENS][MAX_WORD];
+   for(int y = 0; y < MAX_TOKENS; y++){
+      memset(tokens[y], '\0', MAX_WORD);
+   }
 
    for(int i = 0; i < numPosts; i++){
       #ifdef DEBUG
@@ -43,14 +46,15 @@ int main () {
       #ifdef DEBUG
          printf("\nNormalized %s\n", post[i]);
       #endif
+      
 
       int t = tokenize(post[i], tokens);
 
       #ifdef DEBUG
          printf("\nTokens\n");
 
-         for(int i = 0; i < t; i++){
-            printf("%s\n", tokens[i]);
+         for(int y = 0; y < t; y++){
+            printf("%s\n", tokens[y]);
          }
       #endif
 
@@ -99,6 +103,7 @@ int tokenize(const char line[], char tokens[][MAX_WORD]){
    int lineIndex = 0;
    int wordIndex = 0;
    int letterIndex = 0;
+   int wordCount = 0;
 
    while(line[lineIndex] != '\0'){
       if(line[lineIndex] != ' '){
@@ -106,12 +111,19 @@ int tokenize(const char line[], char tokens[][MAX_WORD]){
          letterIndex++;
       }
       else if(line[lineIndex] == ' '){
-         ++wordIndex;
+         if(tokens[wordIndex][0] != ' ' && tokens[wordIndex][0] != '\0'){
+            wordIndex++;
+         }
          letterIndex = 0;
       }
       ++lineIndex;
    }
-   return(wordIndex - 1);
+   for(int i = 0; i < MAX_TOKENS; i++){
+      if(tokens[i][0] != '\0'){
+         wordCount++;
+      }
+   }
+   return(wordCount);
 }
 
 int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD], int numStop){
