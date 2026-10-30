@@ -45,7 +45,7 @@ int main () {
       #endif
 
       int t = tokenize(post[i], tokens);
-      
+
       #ifdef DEBUG
          printf("\nTokens\n");
 
@@ -84,7 +84,7 @@ void normalize(char line[]){
          line[index] = line[index] + 32;//add 32 to map ascii caps to lowercase
       }
       for(int i = 0; i < PUNCTUATION; i++){
-         if(line[index] == punctuation[i] && line[index] != '\0"'){
+         if(line[index] == punctuation[i] && line[index] != '\0'){
             line[index] = 32;
          }
       }
@@ -99,7 +99,6 @@ int tokenize(const char line[], char tokens[][MAX_WORD]){
    int lineIndex = 0;
    int wordIndex = 0;
    int letterIndex = 0;
-   bool space = false;
 
    while(line[lineIndex] != '\0'){
       if(line[lineIndex] != ' '){
@@ -109,7 +108,6 @@ int tokenize(const char line[], char tokens[][MAX_WORD]){
       else if(line[lineIndex] == ' '){
          ++wordIndex;
          letterIndex = 0;
-         space = true;
       }
       ++lineIndex;
    }
@@ -120,17 +118,20 @@ int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD]
    bool match = false;
    int numTokenNew = numToken;
    for(int i = 0; i < numToken; i++){
+      if(match){
+         i--;
+      }
+      match = false;
       for(int y = 0; y < numStop; y++){
-         if(strcmp(tokens[i], stop[y])){// tokens[i][z] == stop[y][z] && tokens[i][z] != '\0'
+         if(strcmp(tokens[i], stop[y]) == 0){
             match = true;
             break;
          }
       }
-      if(match == true){
+      if(match){
          shiftArrayLeft(tokens, numToken, i);
          numTokenNew--;
       }
-      match = false;
    }
    return numTokenNew;
 }
