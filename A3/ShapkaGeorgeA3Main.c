@@ -1,13 +1,19 @@
 #include "ShapkaGeorgeA3.h"
 
+
+
 #define PUNCTUATION 12
 //#define DEBUG
+
+
 
 void normalize(char line[]);
 int tokenize(const char line[], char tokens[][MAX_WORD]);
 int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD], int numStop);
 void applyLemmaMap(char tokens[][MAX_WORD], int count, char variant[][MAX_WORD], char lemma[][MAX_WORD], int L);
 void shiftArrayLeft(char inputArray[][MAX_WORD], int maxStrings, int startIndex);
+
+
 
 int main () {
 
@@ -181,7 +187,7 @@ int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD]
       }//end of stop iteration
 
       if(match){
-         shiftArrayLeft(tokens, numToken, i);
+         shiftArrayLeft(tokens, numToken - i, i);
          numTokenNew--;
       }
    }//end of token iteration
@@ -202,7 +208,10 @@ void applyLemmaMap(char tokens[][MAX_WORD], int count, char variant[][MAX_WORD],
 }//end of applyLemmaMap
 
 
-
+/// @brief Shifts an array of strings to the left to remove empty indices
+/// @param inputArray 
+/// @param maxStrings total strings from the start index to the end
+/// @param startIndex index to start the shift from
 void shiftArrayLeft(char inputArray[][MAX_WORD], int maxStrings, int startIndex){
     for (int i = startIndex; i < maxStrings - 1; i++) {
         strcpy(inputArray[i], inputArray[i + 1]);
