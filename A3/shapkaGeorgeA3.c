@@ -1,113 +1,88 @@
-#include "ShapkaGeorgeA3.h"
+//FILE: shapkaGeorgeA3.c
+//DEVELOPER: George Shapka
+
+#ifndef GIVEN_A3_H
+#define GIVEN_A3_H
+#include "givenA3.h"
+#endif
+// REMEMBER to change this file name to the required format of lastnameFirstnameA3.c
 
 
+//I use bool
+#include <stdbool.h>
 
+//constant I used
 #define PUNCTUATION 12
-//#define DEBUG
 
-
-
-void normalize(char line[]);
-int tokenize(const char line[], char tokens[][MAX_WORD]);
-int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD], int numStop);
-void applyLemmaMap(char tokens[][MAX_WORD], int count, char variant[][MAX_WORD], char lemma[][MAX_WORD], int L);
+//extra function
 void shiftArrayLeft(char inputArray[][MAX_WORD], int maxStrings, int startIndex);
 
 
+// function definition of readInput
 
-int main () {
+int readInput(FILE * inputData,
+                char stop[][MAX_WORD],
+                int * numStop,
+                char variant[][MAX_WORD],
+                char lemma[][MAX_WORD],
+                int * numLemma,
+                char post[][MAX_LEN]) {
 
-   FILE * fileInput = NULL;
    
-   char stop[MAX_STOP][MAX_WORD];
-   char variant[MAX_LEMMA][MAX_WORD];
-   char lemma[MAX_LEMMA][MAX_WORD];
-   char post[MAX_POSTS][MAX_LEN];
-
-   int numPosts;
-   int numStops;
-   int numLemma;
+   int i;
+   int num;
+   char line [MAX_LEN];
    
-   char filename [20];
+   // read num of stop words
    
-   printf ("Enter filename: ");
-   scanf ("%s", filename);
+   fscanf(inputData, "%d", &num);
+   fgetc(inputData);
    
-   fileInput = fopen (filename, "r");
-   numPosts = readInput (fileInput, stop, &numStops, variant, lemma, &numLemma, post);
+   *numStop = num;
    
-   // call other functions here
-   char tokens[MAX_TOKENS][MAX_WORD];
-
-   printf("\n\n");
+   // read the stop words
    
-   //iterate posts
-   for(int i = 0; i < numPosts; i++){   
-
-      //clear token array   
-      for(int y = 0; y < MAX_TOKENS; y++){
-         memset(tokens[y], '\0', MAX_WORD);
-      }
-
-      printf("Post %d original: %s\n", i + 1, post[i]);
-
-
-      normalize(post[i]);
-      #ifdef DEBUG
-         printf("\nNormalized %s\n", post[i]);
-      #endif
+   for (i = 0; i < num; i++) {
+      fgets (line, MAX_LEN, inputData);
+      line [strlen (line) - 1] = '\0';
+      strcpy( stop[i],line);
+   }
+   
+   // repeat the same as above for lemma pairs
+   
+   fscanf(inputData, "%d", &num);
+   fgetc(inputData);
+   
+   *numLemma = num;
+   
+   for (i = 0; i < num; i++) {
+      fgets (line, MAX_LEN, inputData);        // read the variant
+      line [strlen (line) - 1] = '\0';
+      strcpy( variant[i],line);
       
-
-      int t = tokenize(post[i], tokens);
-      #ifdef DEBUG
-         printf("\nTokens\n");
-
-         for(int y = 0; y < t; y++){
-            printf("%s\n", tokens[y]);
-         }
-      #endif
-
-
-      int r = removeStopWords(tokens, t, stop, numStops);
-      #ifdef DEBUG
-         printf("\nRemoved Stop Words\n");
-         for(int i = 0; i < r; i++){
-            printf("%s\n", tokens[i]);
-         }
-      #endif
-
-
-      applyLemmaMap(tokens, r, variant, lemma, numLemma);
-      #ifdef DEBUG
-         printf("\nlemmatized\n");
-         for(int i = 0; i < r; i++){
-            printf("%s\n", tokens[i]);
-         }
-         printf("----------------------------------\n\n");
-      #endif
-      
-
-      printf("Number of tokens = %d\n", t);
-      printf("Number of stop words removed = %d\n", t - r);
-      printf("Post %d cleaned: ", i + 1);
-      //print tokens as a line
-      for(int y = 0; y < r; y++){
-         printf("%s", tokens[y]);
-         if(y != r - 1){
-            printf(" ");
-         }
-      }
-
-      printf("\n\n");
-   }//end of post iteration
+      fgets (line, MAX_LEN, inputData);        // read the lemma
+      line [strlen (line) - 1] = '\0';
+      strcpy( lemma[i],line);
+   }
    
+   // repeat the same as above for posts
    
-   fclose (fileInput);
-   return 0;
-}//end of main
+   fscanf(inputData, "%d", &num);
+   fgetc(inputData);
+   
+   for (i = 0; i < num; i++) {
+      fgets (line, MAX_LEN, inputData);
+      line [strlen (line) - 1] = '\0';
+      strcpy( post[i],line);
+   }
+   
+   return num;          // return num of posts read
+}
 
+// define all other functions here
 
-
+/// @brief takes a string and removes punctuation and coverts to lowercase
+/// @param line 
 void normalize(char line[]){
    int index = 0;
    char punctuation [PUNCTUATION] = {'.', ',', '!', '?', ':', ';', '\"', '(', ')', '[', ']', '\0'};
@@ -133,7 +108,10 @@ void normalize(char line[]){
 }//end of normalize
 
 
-
+/// @brief Takes a string and converts it to tokens
+/// @param line 
+/// @param tokens 
+/// @return number of tokens
 int tokenize(const char line[], char tokens[][MAX_WORD]){
    int lineIndex = 0;
    int wordIndex = 0;
@@ -166,7 +144,12 @@ int tokenize(const char line[], char tokens[][MAX_WORD]){
 }//end of tokenize
 
 
-
+/// @brief removes stop words
+/// @param tokens 
+/// @param numToken 
+/// @param stop 
+/// @param numStop 
+/// @return number of tokens remainnig
 int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD], int numStop){
    bool match = false;
    int numTokenNew = numToken;
@@ -187,7 +170,7 @@ int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD]
       }//end of stop iteration
 
       if(match){
-         shiftArrayLeft(tokens, numToken - i, i);
+         shiftArrayLeft(tokens, numTokenNew, i);
          numTokenNew--;
       }
    }//end of token iteration
@@ -196,7 +179,12 @@ int removeStopWords(char tokens[][MAX_WORD], int numToken, char stop[][MAX_WORD]
 }//end of removeStopWords
 
 
-
+/// @brief performs lemmatization on an array of words
+/// @param tokens 
+/// @param count 
+/// @param variant 
+/// @param lemma 
+/// @param L 
 void applyLemmaMap(char tokens[][MAX_WORD], int count, char variant[][MAX_WORD], char lemma[][MAX_WORD], int L){
    for(int i = 0; i < count; i++){
       for(int y = 0; y < L; y++){
@@ -207,12 +195,12 @@ void applyLemmaMap(char tokens[][MAX_WORD], int count, char variant[][MAX_WORD],
    }//end of token iteration
 }//end of applyLemmaMap
 
-
-/// @brief Shifts an array of strings to the left to remove empty indices
+/// @brief shifts an array of strings left by one index
 /// @param inputArray 
-/// @param maxStrings total strings from the start index to the end
-/// @param startIndex index to start the shift from
+/// @param maxStrings 
+/// @param startIndex 
 void shiftArrayLeft(char inputArray[][MAX_WORD], int maxStrings, int startIndex){
+
     for (int i = startIndex; i < maxStrings - 1; i++) {
         strcpy(inputArray[i], inputArray[i + 1]);
     }
