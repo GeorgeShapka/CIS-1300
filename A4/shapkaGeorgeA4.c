@@ -48,6 +48,7 @@ int readFile(FILE *fPtr, Student studentData[MAX_STUDENTS]){
             ++index;
         }
     }
+    return status;
 }
 
 
@@ -67,5 +68,29 @@ void printAtRiskStudents(Student [MAX_STUDENTS]){
 
 
 int printStudent (Student studentData [MAX_STUDENTS], int whichOne){
+    int status = -1;
 
+    double studyScore = 12.00;
+    double breakScore = 11.20;
+    double sleepScore = 18.05;
+    double studentScore = 77.20;
+    char grade = 'B';
+
+    for(int i = 0; i < MAX_STUDENTS; i++){
+        if(studentData[i].id == whichOne){
+            status = 1;
+            
+            printf("Student Id: %d - Overall weekly score breakdown\n\n", studentData[i].id);
+            printf("Student Name: %s\n", studentData[i].name);
+            printf("*************************\n");
+            printf("Study  = %.2lf\n", studyScore);
+            printf("Breaks = %.2lf\n", breakScore);
+            printf("Sleep  = %.2lf\n", sleepScore);
+            printf("*************************\n");
+            printf("Your overall weekly score = %.2lf%%\n", studentScore);
+            printf("Overall grade = %c\n", grade);
+        }
+    }
+
+    return status;
 }
