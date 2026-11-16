@@ -53,11 +53,19 @@ int readFile(FILE *fPtr, Student studentData[MAX_STUDENTS]){
 
 
 void computeStudent (Student *studentData){
+    int studyWeight;
+    int breakWeight;
+    int sleepWeight;
+    int studiedZeroDays = 0;
+
     //calculate study
     for(int i = 0; i < DAYS; i++){
         printf("Day %d study minutes: ", i + 1);
         if(studentData->study[i] > 180){
             studentData->study[i] = 180;
+        }
+        else if(studentData->study[i] <= 0){
+            ++studiedZeroDays;
         }
 
         studentData->studyContribution += (studentData->study[i] / 180.0) * 100.0;
@@ -104,11 +112,6 @@ void computeStudent (Student *studentData){
             }
         }
         studentData->sleepContribution = studentData->sleepContribution / DAYS;
-
-
-        int studyWeight;
-        int breakWeight;
-        int sleepWeight;
         
         if(studentData->examWeek == 1){
             studyWeight = 50;
@@ -148,6 +151,11 @@ void computeStudent (Student *studentData){
         else if(80 <= studentData->overallScore){
             studentData->grade = 'A';
         }
+    }
+
+    //at risk
+    if(studentData->grade == 'F' || studentData->sleepContribution < ((double)sleepWeight / 2) || studiedZeroDays >= 4){
+        studentData->atRisk = 1;
     }
 }
 
