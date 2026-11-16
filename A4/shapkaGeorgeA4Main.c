@@ -14,6 +14,8 @@ int main(void){
 
     readFile(fPtr, students);
 
+    computeStudent(&students[11]);
+
     printStudent(students, 1012);
 
     return(EXIT_SUCCESS);
