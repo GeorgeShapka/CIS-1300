@@ -235,7 +235,19 @@ void printClassSummary(Student studentData[MAX_STUDENTS]){
 
 
 void printAtRiskStudents(Student studentData[MAX_STUDENTS]){
-
+    printf("==== At-Risk Students ====\n");
+    for(int i = 0; i < MAX_STUDENTS; i++){
+        if(studentData[i].atRisk == 1){
+            int zsd = 0;
+            for(int j = 0; j < DAYS; j++){
+                if(studentData[i].study[j] <= 0){
+                    ++zsd;
+                }
+            }
+            printf("%d %s - Score: %.2lf, Grade: %c, Zero study days: %d\n", studentData[i].id, studentData[i].name, studentData[i].overallScore, studentData[i].grade, zsd);
+        }
+    }
+    printf("\n\n");
 }
 
 

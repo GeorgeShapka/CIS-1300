@@ -1,4 +1,3 @@
-#pragma once
 #include "givenA4.h"
 #include <string.h>
 #include <ctype.h>
@@ -33,7 +32,7 @@ int main(void){
         printf("1. Print data for one student, given their id\n");
         printf("2. Print class summary\n");
         printf("3. Print at-risk students\n");
-        printf("Exit\n");
+        printf("4. Exit\n");
         if(fgets(menuInput, MAX_MENU_INPUT, stdin) != NULL){
             menuInputSwitch = strchr(MENU_OPTIONS, menuInput[0]);
             switch(menuInputSwitch != NULL ? *menuInputSwitch : 0){
