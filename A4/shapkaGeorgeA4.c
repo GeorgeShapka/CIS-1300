@@ -1,7 +1,7 @@
 #include "givenA4.h"
 #include <string.h>
 
-#define DEBUG
+//#define DEBUG
 
 int readFile(FILE *fPtr, Student studentData[MAX_STUDENTS]){
     int status = 1;
@@ -61,7 +61,6 @@ void computeStudent (Student *studentData){
 
     //calculate study
     for(int i = 0; i < DAYS; i++){
-        printf("Day %d study minutes: ", i + 1);
         if(studentData->study[i] > 180){
             studentData->study[i] = 180;
         }
@@ -169,9 +168,9 @@ void printClassSummary(Student studentData[MAX_STUDENTS]){
     double averageScore = 0;
     double sumScore = 0;
     double highestScoreNum = 0;
-    char highestScoreName[MAX_NAME] = 0;
-    double lowestScoreNum = 0;
-    char lowestScoreName[MAX_NAME] = 0;
+    char highestScoreName[MAX_NAME] = {0};
+    double lowestScoreNum = __INT32_MAX__;
+    char lowestScoreName[MAX_NAME] = {0};
     int countA = 0;
     int countB = 0;
     int countC = 0;
