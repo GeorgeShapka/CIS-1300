@@ -230,7 +230,7 @@ void printClassSummary(Student studentData[MAX_STUDENTS]){
     printf("C: %d\n", countC);
     printf("D: %d\n", countD);
     printf("F: %d\n", countF);
-    printf("At-risk students: %d\n", countAtRisk);
+    printf("At-risk students: %d\n\n\n", countAtRisk);
 }
 
 
@@ -254,7 +254,7 @@ int printStudent (Student studentData [MAX_STUDENTS], int whichOne){
             printf("Sleep  = %.2lf\n", studentData[i].sleepContribution);
             printf("*************************\n");
             printf("Your overall weekly score = %.2lf%%\n", studentData[i].overallScore);
-            printf("Overall grade = %c\n", studentData[i].grade);
+            printf("Overall grade = %c\n\n\n", studentData[i].grade);
         }
     }
 
