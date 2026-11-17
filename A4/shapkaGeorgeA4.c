@@ -1,4 +1,5 @@
 #include "givenA4.h"
+#include <string.h>
 
 #define DEBUG
 
@@ -157,15 +158,84 @@ void computeStudent (Student *studentData){
     if(studentData->grade == 'F' || studentData->sleepContribution < ((double)sleepWeight / 2) || studiedZeroDays >= 4){
         studentData->atRisk = 1;
     }
+    else{
+        studentData->atRisk = 0;
+    }
 }
 
 
-void printClassSummary(Student  [MAX_STUDENTS]){
-    
+void printClassSummary(Student studentData[MAX_STUDENTS]){
+    int totalStudents = 0;
+    double averageScore = 0;
+    double sumScore = 0;
+    double highestScoreNum = 0;
+    char highestScoreName[MAX_NAME] = 0;
+    double lowestScoreNum = 0;
+    char lowestScoreName[MAX_NAME] = 0;
+    int countA = 0;
+    int countB = 0;
+    int countC = 0;
+    int countD = 0;
+    int countF = 0;
+    int countAtRisk = 0;
+
+    for(int i = 0; i < MAX_STUDENTS; i++){
+        ++totalStudents;
+        sumScore += studentData[i].overallScore;
+
+        //highest score
+        if(studentData[i].overallScore > highestScoreNum){
+            highestScoreNum = studentData[i].overallScore;
+            strcpy(highestScoreName, studentData[i].name);
+        }
+
+        //lowest score
+        if(studentData[i].overallScore < lowestScoreNum){
+            lowestScoreNum = studentData[i].overallScore;
+            strcpy(lowestScoreName, studentData[i].name);
+        }
+
+        switch (studentData[i].grade)
+        {
+        case 'A':
+            ++countA;
+            break;
+        case 'B':
+            ++countB;
+            break;
+        case 'C':
+            ++countC;
+            break;
+        case 'D':
+            ++countD;
+            break;
+        case 'F':
+            ++countF;
+            break;
+        default:
+            break;
+        }
+        if(studentData[i].atRisk == 1){
+            ++countAtRisk;
+        }
+    }
+
+    averageScore = sumScore / totalStudents;
+
+    printf("==== Class Summary ====\nStudents processed: %d\n", totalStudents);
+    printf("Class average score: %.2lf\n", averageScore);
+    printf("Highest score: %.2lf (%s)\n", highestScoreNum, highestScoreName);
+    printf("Lowest score: %.2lf (%s)\n", lowestScoreNum, lowestScoreName);
+    printf("A: %d\n", countA);
+    printf("B: %d\n", countB);
+    printf("C: %d\n", countC);
+    printf("D: %d\n", countD);
+    printf("F: %d\n", countF);
+    printf("At-risk students: %d\n", countAtRisk);
 }
 
 
-void printAtRiskStudents(Student [MAX_STUDENTS]){
+void printAtRiskStudents(Student studentData[MAX_STUDENTS]){
 
 }
 

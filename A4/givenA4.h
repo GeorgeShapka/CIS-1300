@@ -29,7 +29,7 @@ typedef struct {
 
 int readFile (FILE *, Student studentData [MAX_STUDENTS]);
 void computeStudent (Student * studentData);
-void printClassSummary(Student  [MAX_STUDENTS]);
-void printAtRiskStudents(Student [MAX_STUDENTS]);
+void printClassSummary(Student studentData[MAX_STUDENTS]);
+void printAtRiskStudents(Student studentData[MAX_STUDENTS]);
 int printStudent (Student studentData [MAX_STUDENTS], int whichOne);
 
