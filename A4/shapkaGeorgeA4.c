@@ -112,46 +112,46 @@ void computeStudent (Student *studentData){
             }
         }
         studentData->sleepContribution = studentData->sleepContribution / DAYS;
-        
-        if(studentData->examWeek == 1){
-            studyWeight = 50;
-            breakWeight = 10;
-            sleepWeight = 40;
-        }
-        else{
-            studyWeight = 40;
-            breakWeight = 20;
-            sleepWeight = 40;
-        }
-
-        //calculate contributions
-        studentData->studyContribution = (studentData->studyContribution / 100.0) * studyWeight;
-        studentData->breakContribution = (studentData->breakContribution / 100.0) * breakWeight;
-        studentData->sleepContribution = (studentData->sleepContribution / 100.0) * sleepWeight;
-
-        //calculate grade
-        studentData->overallScore = studentData->studyContribution + studentData->breakContribution + studentData->sleepContribution;
-        
-        if(studentData->sleepContribution < 20.0)
-        {
-            studentData->grade = 'F';
-        }
-        else if(studentData->overallScore <= 49.99){
-            studentData->grade = 'F';
-        }
-        else if(50 <= studentData->overallScore && studentData->overallScore <= 59.99){
-            studentData->grade = 'D';
-        }
-        else if(60 <= studentData->overallScore && studentData->overallScore <= 69.99){
-            studentData->grade = 'C';
-        }
-        else if(70 <= studentData->overallScore && studentData->overallScore <= 79.99){
-            studentData->grade = 'B';
-        }
-        else if(80 <= studentData->overallScore){
-            studentData->grade = 'A';
-        }
     }
+    if(studentData->examWeek == 1){
+        studyWeight = 50;
+        breakWeight = 10;
+        sleepWeight = 40;
+    }
+    else{
+        studyWeight = 40;
+        breakWeight = 20;
+        sleepWeight = 40;
+    }
+
+    //calculate contributions
+    studentData->studyContribution = (studentData->studyContribution / 100.0) * studyWeight;
+    studentData->breakContribution = (studentData->breakContribution / 100.0) * breakWeight;
+    studentData->sleepContribution = (studentData->sleepContribution / 100.0) * sleepWeight;
+
+    //calculate grade
+    studentData->overallScore = studentData->studyContribution + studentData->breakContribution + studentData->sleepContribution;
+    
+    if(studentData->sleepContribution < 20.0)
+    {
+        studentData->grade = 'F';
+    }
+    else if(studentData->overallScore <= 49.99){
+        studentData->grade = 'F';
+    }
+    else if(50 <= studentData->overallScore && studentData->overallScore <= 59.99){
+        studentData->grade = 'D';
+    }
+    else if(60 <= studentData->overallScore && studentData->overallScore <= 69.99){
+        studentData->grade = 'C';
+    }
+    else if(70 <= studentData->overallScore && studentData->overallScore <= 79.99){
+        studentData->grade = 'B';
+    }
+    else if(80 <= studentData->overallScore){
+        studentData->grade = 'A';
+    }
+    
 
     //at risk
     if(studentData->grade == 'F' || studentData->sleepContribution < ((double)sleepWeight / 2) || studiedZeroDays >= 4){
