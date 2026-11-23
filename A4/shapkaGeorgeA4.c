@@ -1,7 +1,6 @@
 #include "givenA4.h"
 #include <string.h>
 
-//#define DEBUG
 
 int readFile(FILE *fPtr, Student studentData[MAX_STUDENTS]){
     int status = 1;
@@ -23,29 +22,6 @@ int readFile(FILE *fPtr, Student studentData[MAX_STUDENTS]){
             for (int i = 0; i < 7; i++){
                 fscanf(fPtr, "%lf %lf %lf", &studentData[index].study[i], &studentData[index].breaks[i], &studentData[index].sleep[i]);
             }
-
-            #ifdef DEBUG
-                printf("ID: %d\n", studentData[index].id);
-                printf("Name: %s\n", studentData[index].name);
-                printf("Exam Week: %d\n", studentData[index].examWeek);
-
-                printf("Study Hours: ");
-                for (int i = 0; i < 7; i++) {
-                    printf("%.2lf ", studentData[index].study[i]);
-                }
-
-                printf("\nBreak Hours: ");
-                for (int i = 0; i < 7; i++) {
-                    printf("%.2lf ", studentData[index].breaks[i]);
-                }
-
-                printf("\nSleep Hours: ");
-                for (int i = 0; i < 7; i++) {
-                    printf("%.2lf ", studentData[index].sleep[i]);
-                }
-
-                printf("\n-----------------------------\n");
-            #endif
             ++index;
         }
     }
@@ -54,10 +30,13 @@ int readFile(FILE *fPtr, Student studentData[MAX_STUDENTS]){
 
 
 void computeStudent (Student *studentData){
-    int studyWeight;
-    int breakWeight;
-    int sleepWeight;
+    int studyWeight = 0;
+    int breakWeight = 0;
+    int sleepWeight = 0;
     int studiedZeroDays = 0;
+    studentData->studyContribution = 0;
+    studentData->breakContribution = 0;
+    studentData->sleepContribution = 0;
 
     //calculate study
     for(int i = 0; i < DAYS; i++){
