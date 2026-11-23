@@ -92,5 +92,9 @@ int main(void){
         }
     }
 
+    if(fPtr != NULL){
+        fclose(fPtr);
+    }
+
     return(EXIT_SUCCESS);
 }
